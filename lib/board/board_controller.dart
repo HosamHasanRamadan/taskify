@@ -114,6 +114,32 @@ class BoardController {
     await tasksRepo.addTask(task);
   }
 
+  Future<void> updateTask({
+    required Task newTask,
+    required Task oldTask,
+  }) async {
+    if (oldTask.groupId != newTask.groupId) {
+      final fromGroupController = appFlowyBoardController.getGroupController(oldTask.groupId)!;
+      final toGroupController = appFlowyBoardController.getGroupController(newTask.groupId)!;
+      final fromGroup = fromGroupController.groupData.customData as Group;
+      final toGroup = toGroupController.groupData.customData as Group;
+
+      final fromGroupTasksOrder = [...fromGroupController.items.map((e) => e.id)]
+        ..retainWhere((id) => id != newTask.id);
+
+      final toGroupTasksOrder = [...toGroupController.items.map((e) => e.id), newTask.id];
+
+      await tasksRepo.updateTaskGroup(
+        task: newTask,
+        oldGroup: fromGroup,
+        newGroup: toGroup,
+        oldGroupOrder: fromGroupTasksOrder.toList(),
+        newGroupOrder: toGroupTasksOrder.toList(),
+      );
+    }
+    await tasksRepo.updateTask(newTask);
+  }
+
   Future<void> startTask(Task task) async {
     await tasksRepo.startTimer(task);
   }
