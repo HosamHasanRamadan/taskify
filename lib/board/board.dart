@@ -93,7 +93,9 @@ class _BoardState extends ConsumerState<Board> {
     if (item is TaskGroupItem) {
       return TaskCard(
         task: item.task,
-        onTab: () {},
+        onTab: () {
+          showTaskForm(item.task);
+        },
         key: ValueKey(item.id),
       );
     }
@@ -181,6 +183,22 @@ class _BoardState extends ConsumerState<Board> {
                             return ProviderScope(
                               parent: ProviderScope.containerOf(context),
                               child: const CompletedTaskDialog(),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: const Text('Order groups'),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return ProviderScope(
+                              parent: ProviderScope.containerOf(context),
+                              child: GroupsOrderDialog(
+                                initialGroupOrder: controller.groupDatas.map((e) => e.customData as Group).toList(),
+                              ),
                             );
                           },
                         );
@@ -318,10 +336,15 @@ Future<bool> exportProjectToCSV({
   required String projectName,
   required List<GroupedTasks> groups,
 }) async {
-  await [
+  final permessionResult = await [
     Permission.storage,
     Permission.manageExternalStorage,
   ].request();
+
+  for (final perm in permessionResult.entries) {
+    if (perm.value.isGranted == false) return false;
+  }
+
   final fileName = '$projectName.csv';
 
   final path = await FilePicker.platform.getDirectoryPath();

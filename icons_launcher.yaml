@@ -1,0 +1,28 @@
+# flutter pub run icons_launcher:create
+
+icons_launcher:
+  image_path: "assets/icons/ic_round.png"
+  platforms:
+    android:
+      enable: true
+      image_path: "assets/icons/ic_round.png"
+      adaptive_background_image: "assets/icons/ic_background.png"
+      adaptive_foreground_image: "assets/icons/ic_foreground.png"
+      adaptive_round_image: "assets/icons/ic_circle.png"
+      adaptive_monochrome_image: "assets/icons/ic_monochrome.png"
+    ios:
+      enable: true
+      image_path: "assets/icons/ic_rectangle.png"
+    web:
+      enable: true
+      image_path: "assets/icons/ic_round.png"
+      favicon_path: "assets/icons/ic_circle.png"
+    macos:
+      enable: true
+      image_path: "assets/icons/ic_round.png"
+    windows:
+      enable: true
+      image_path: "assets/icons/ic_round.png"
+    linux:
+      enable: false
+      image_path: "assets/icons/ic_round.png"

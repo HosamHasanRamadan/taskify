@@ -53,7 +53,7 @@ class TasksRepo {
     final taskRef = taskCollection.doc(task.id);
     final projecttaskOrderRef = projectGroupTasksOrderedCollection.doc(task.projectId);
 
-    firestore.runTransaction((transaction) async {
+    await firestore.runTransaction((transaction) async {
       final orderMap = await transaction.get(projecttaskOrderRef);
       transaction.update(taskRef, task.copyWith(groupId: newGroup.id).toFirebaseMap());
       final order = ProjectGroupsOrderStructure.fromFirebaseSnapshot(orderMap);
@@ -144,32 +144,16 @@ class TasksRepo {
     }
 
     if (value) {
-      newTask = Task(
-        groupId: newTask.groupId,
-        projectId: newTask.projectId,
-        id: newTask.id,
-        title: newTask.title,
-        durationSpentInSec: newTask.durationSpentInSec,
+      newTask = task.copyWith(
         isCompleted: true,
         compilationTimestamp: DateTime.now().unixTimestamp,
-        lastStartTimestamp: newTask.lastStartTimestamp,
-        isRunning: newTask.isRunning,
-        content: newTask.content,
       );
     } else {
-      newTask = Task(
-        groupId: newTask.groupId,
-        projectId: newTask.projectId,
-        id: newTask.id,
-        title: newTask.title,
-        durationSpentInSec: newTask.durationSpentInSec,
+      newTask = task.copyWith(
         isCompleted: false,
         compilationTimestamp: null,
-        lastStartTimestamp: newTask.lastStartTimestamp,
-        isRunning: newTask.isRunning,
-        content: newTask.content,
       );
     }
-    taskCollection.doc(task.id).update(newTask.toFirebaseMap());
+    await taskCollection.doc(task.id).update(newTask.toFirebaseMap());
   }
 }

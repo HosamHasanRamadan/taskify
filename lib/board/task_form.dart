@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -33,6 +34,11 @@ class _TaskFormState extends State<TaskForm> with StatefulPropsMixin {
   @override
   void initState() {
     super.initState();
+    if (widget.initialTask != null) {
+      taskTitleController.text = widget.initialTask!.title;
+      taskContentController.text = widget.initialTask!.content ?? '';
+      selectedGroup = widget.groups.firstWhereOrNull((element) => element.id == widget.initialTask!.groupId);
+    }
   }
 
   @override
@@ -111,6 +117,24 @@ class _TaskFormState extends State<TaskForm> with StatefulPropsMixin {
     final projectId = context.container.read(projectIdProvider);
 
     if (formKey.currentState!.validate() && selectedGroup != null) {
+      if (widget.initialTask != null) {
+        final updatedTask = widget.initialTask!.copyWith(
+          title: taskTitleController.text,
+          content: taskContentController.text,
+          groupId: selectedGroup!.id,
+        );
+        controller
+            .updateTask(
+          newTask: updatedTask,
+          oldTask: widget.initialTask!,
+        )
+            .then(
+          (value) {
+            if (mounted) navigator.pop();
+          },
+        );
+        return;
+      }
       final task = Task(
         projectId: projectId,
         groupId: selectedGroup!.id,
@@ -124,7 +148,7 @@ class _TaskFormState extends State<TaskForm> with StatefulPropsMixin {
       );
 
       controller.addTask(task).then((value) {
-        navigator.pop();
+        if (mounted) navigator.pop();
       });
     }
   }

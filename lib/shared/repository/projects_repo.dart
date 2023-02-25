@@ -7,6 +7,8 @@ import 'package:taskify/projects/providers.dart';
 final projectRepoProvider = Provider((ref) => ProjectsRepo());
 
 class ProjectsRepo {
+  static CollectionReference<Map<String, dynamic>> get taskCollection => firestore.collection(FirebaseCollections.task);
+
   static FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
   static CollectionReference<Map<String, dynamic>> get projectCollection =>
@@ -39,6 +41,26 @@ class ProjectsRepo {
       groupedTasksOrder: newTasksGroupOrder,
     );
     await projectGroupTasksOrderedCollection.doc(group.projectId).update(newStructure.toFirebaseMap());
+  }
+
+  Future<void> deleteProject(String projectId) async {
+    final projectRef = projectCollection.doc(projectId);
+    final structureRef = projectGroupTasksOrderedCollection.doc(projectId);
+    final groups = await groupCollection.where('project_id', isEqualTo: projectId).get();
+    final tasks = await taskCollection.where('project_id', isEqualTo: projectId).get();
+    final batch = firestore.batch();
+    await firestore.runTransaction((transaction) async {
+      transaction.delete(projectRef);
+      transaction.delete(structureRef);
+      for (final group in groups.docs) {
+        batch.delete(group.reference);
+      }
+      for (final task in tasks.docs) {
+        batch.delete(task.reference);
+      }
+    });
+
+    await batch.commit();
   }
 
   Future<void> updateGroup(Group group) async {
