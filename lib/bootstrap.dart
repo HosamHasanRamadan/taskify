@@ -4,7 +4,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskify/projects/providers.dart';
@@ -15,7 +14,7 @@ Future<ProviderContainer> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // remove hash from web url
-  // setPathUrlStrategy();
+  setPathUrlStrategy();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final sharedPref = await SharedPreferences.getInstance();

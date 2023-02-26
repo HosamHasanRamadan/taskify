@@ -9,7 +9,6 @@ import 'package:taskify/shared/extensions/context_x.dart';
 import 'package:taskify/shared/models.dart';
 import 'package:taskify/projects/providers.dart';
 import 'package:taskify/shared/repository/projects_repo.dart';
-import 'package:flutter/foundation.dart' as foundation;
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -88,7 +87,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   ),
                 ),
                 ExpansionTile(
-                  title: Text('Themes'),
+                  title: const Text('Themes'),
                   leading: const Icon(Icons.style),
                   children: [
                     Consumer(builder: (context, ref, child) {

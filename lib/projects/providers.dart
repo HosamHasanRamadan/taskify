@@ -120,7 +120,7 @@ final groupedTasksProvider = Provider(
       return groupedTasks;
     }
 
-    return <GroupedTasks>[];
+    return null;
   },
   dependencies: [
     groupsProvider,
