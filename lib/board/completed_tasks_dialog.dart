@@ -16,6 +16,14 @@ class CompletedTaskDialog extends StatelessWidget {
         child: Consumer(
           builder: (context, ref, child) {
             final completedTasks = ref.watch(completedTasksProvider);
+            if (completedTasks.isEmpty) {
+              return Center(
+                child: Text(
+                  'No completed tasks yet',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              );
+            }
             return ListView.builder(
               padding: const EdgeInsets.symmetric(
                 vertical: 16,
