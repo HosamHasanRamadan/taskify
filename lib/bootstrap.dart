@@ -8,12 +8,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskify/projects/providers.dart';
 import 'package:taskify/shared/firebase_options.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 Future<ProviderContainer> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // remove hash from web url
-  // setPathUrlStrategy();
+  setPathUrlStrategy();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final sharedPref = await SharedPreferences.getInstance();
