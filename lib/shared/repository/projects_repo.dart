@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:taskify/shared/constants.dart';
 import 'package:taskify/shared/models.dart';
-import 'package:taskify/projects/providers.dart';
 
 final projectRepoProvider = Provider((ref) => ProjectsRepo());
 

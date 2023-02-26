@@ -4,12 +4,10 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taskify/projects/providers.dart';
 import 'package:taskify/shared/firebase_options.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 Future<ProviderContainer> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();

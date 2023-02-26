@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stateful_props/stateful_props.dart';
-import 'package:taskify/board/board_controller.dart';
 import 'package:taskify/projects/providers.dart';
 import 'package:taskify/shared/extensions/context_x.dart';
 import 'package:taskify/shared/models.dart';
@@ -55,7 +54,7 @@ class _GroupFormState extends State<GroupForm> with StatefulPropsMixin {
                   onTap: () {
                     colorPicker();
                   },
-                  child: Icon(Icons.color_lens),
+                  child: const Icon(Icons.color_lens),
                 ),
                 prefixIcon: GestureDetector(
                   onTap: () {},
