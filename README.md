@@ -2,6 +2,8 @@
 <img src="https://user-images.githubusercontent.com/28815699/222177846-ffa3bde8-c84a-4b60-b42f-11a922642be7.png" width=20% height=20%>
 </p>
 
+[![Codemagic build status](https://api.codemagic.io/apps/63f294eb923707492588140f/63f294eb923707492588140e/status_badge.svg)](https://codemagic.io/apps/63f294eb923707492588140f/63f294eb923707492588140e/latest_build)
+
 # Taskify
 Taskify is a task management app that allows users to create, organize and track their tasks. 
 
