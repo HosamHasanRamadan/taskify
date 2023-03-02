@@ -76,10 +76,7 @@ final groupsTasksOrderProvider = StreamProvider(
     });
     final projectId = ref.watch(projectIdProvider);
 
-    return TasksRepo.projectGroupTasksOrderedCollection
-        .doc(projectId)
-        .snapshots()
-        .map(ProjectGroupsOrderStructure.fromFirebaseSnapshot);
+    return TasksRepo.projectStructureCollection.doc(projectId).snapshots().map(ProjectStructure.fromFirebaseSnapshot);
   },
   dependencies: [projectIdProvider],
 );

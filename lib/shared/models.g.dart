@@ -59,9 +59,8 @@ Map<String, dynamic> _$$_ProjectToJson(_$_Project instance) =>
       'color': instance.color,
     };
 
-_$_ProjectGroupsOrderStructure _$$_ProjectGroupsOrderStructureFromJson(
-        Map<String, dynamic> json) =>
-    _$_ProjectGroupsOrderStructure(
+_$_ProjectStructure _$$_ProjectStructureFromJson(Map<String, dynamic> json) =>
+    _$_ProjectStructure(
       id: json['id'] as String,
       groupsOrder: (json['groups_order'] as List<dynamic>)
           .map((e) => e as String)
@@ -71,8 +70,7 @@ _$_ProjectGroupsOrderStructure _$$_ProjectGroupsOrderStructureFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$$_ProjectGroupsOrderStructureToJson(
-        _$_ProjectGroupsOrderStructure instance) =>
+Map<String, dynamic> _$$_ProjectStructureToJson(_$_ProjectStructure instance) =>
     <String, dynamic>{
       'id': instance.id,
       'groups_order': instance.groupsOrder,

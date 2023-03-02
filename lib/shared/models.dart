@@ -118,28 +118,27 @@ class GroupedTasks with _$GroupedTasks {
 }
 
 @Freezed(makeCollectionsUnmodifiable: true)
-class ProjectGroupsOrderStructure with _$ProjectGroupsOrderStructure {
-  const ProjectGroupsOrderStructure._();
+class ProjectStructure with _$ProjectStructure {
+  const ProjectStructure._();
 
   @JsonSerializable(
     fieldRename: FieldRename.snake,
     explicitToJson: true,
   )
-  const factory ProjectGroupsOrderStructure({
+  const factory ProjectStructure({
     required String id,
     required List<String> groupsOrder,
     required List<TaskGroupOrder> groupedTasksOrder,
-  }) = _ProjectGroupsOrderStructure;
+  }) = _ProjectStructure;
 
-  factory ProjectGroupsOrderStructure.fromJson(Map<String, dynamic> json) =>
-      _$ProjectGroupsOrderStructureFromJson(json);
+  factory ProjectStructure.fromJson(Map<String, dynamic> json) => _$ProjectStructureFromJson(json);
 
-  factory ProjectGroupsOrderStructure.fromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  factory ProjectStructure.fromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final json = {
       'id': snapshot.id,
       ...snapshot.data()!,
     };
-    return _$ProjectGroupsOrderStructureFromJson(json);
+    return _$ProjectStructureFromJson(json);
   }
 
   Map<String, dynamic> toFirebaseMap() {

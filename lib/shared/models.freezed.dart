@@ -860,13 +860,12 @@ abstract class _GroupedTasks extends GroupedTasks {
       throw _privateConstructorUsedError;
 }
 
-ProjectGroupsOrderStructure _$ProjectGroupsOrderStructureFromJson(
-    Map<String, dynamic> json) {
-  return _ProjectGroupsOrderStructure.fromJson(json);
+ProjectStructure _$ProjectStructureFromJson(Map<String, dynamic> json) {
+  return _ProjectStructure.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ProjectGroupsOrderStructure {
+mixin _$ProjectStructure {
   String get id => throw _privateConstructorUsedError;
   List<String> get groupsOrder => throw _privateConstructorUsedError;
   List<TaskGroupOrder> get groupedTasksOrder =>
@@ -874,17 +873,15 @@ mixin _$ProjectGroupsOrderStructure {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProjectGroupsOrderStructureCopyWith<ProjectGroupsOrderStructure>
-      get copyWith => throw _privateConstructorUsedError;
+  $ProjectStructureCopyWith<ProjectStructure> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProjectGroupsOrderStructureCopyWith<$Res> {
-  factory $ProjectGroupsOrderStructureCopyWith(
-          ProjectGroupsOrderStructure value,
-          $Res Function(ProjectGroupsOrderStructure) then) =
-      _$ProjectGroupsOrderStructureCopyWithImpl<$Res,
-          ProjectGroupsOrderStructure>;
+abstract class $ProjectStructureCopyWith<$Res> {
+  factory $ProjectStructureCopyWith(
+          ProjectStructure value, $Res Function(ProjectStructure) then) =
+      _$ProjectStructureCopyWithImpl<$Res, ProjectStructure>;
   @useResult
   $Res call(
       {String id,
@@ -893,10 +890,9 @@ abstract class $ProjectGroupsOrderStructureCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProjectGroupsOrderStructureCopyWithImpl<$Res,
-        $Val extends ProjectGroupsOrderStructure>
-    implements $ProjectGroupsOrderStructureCopyWith<$Res> {
-  _$ProjectGroupsOrderStructureCopyWithImpl(this._value, this._then);
+class _$ProjectStructureCopyWithImpl<$Res, $Val extends ProjectStructure>
+    implements $ProjectStructureCopyWith<$Res> {
+  _$ProjectStructureCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -928,12 +924,11 @@ class _$ProjectGroupsOrderStructureCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ProjectGroupsOrderStructureCopyWith<$Res>
-    implements $ProjectGroupsOrderStructureCopyWith<$Res> {
-  factory _$$_ProjectGroupsOrderStructureCopyWith(
-          _$_ProjectGroupsOrderStructure value,
-          $Res Function(_$_ProjectGroupsOrderStructure) then) =
-      __$$_ProjectGroupsOrderStructureCopyWithImpl<$Res>;
+abstract class _$$_ProjectStructureCopyWith<$Res>
+    implements $ProjectStructureCopyWith<$Res> {
+  factory _$$_ProjectStructureCopyWith(
+          _$_ProjectStructure value, $Res Function(_$_ProjectStructure) then) =
+      __$$_ProjectStructureCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -943,13 +938,11 @@ abstract class _$$_ProjectGroupsOrderStructureCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ProjectGroupsOrderStructureCopyWithImpl<$Res>
-    extends _$ProjectGroupsOrderStructureCopyWithImpl<$Res,
-        _$_ProjectGroupsOrderStructure>
-    implements _$$_ProjectGroupsOrderStructureCopyWith<$Res> {
-  __$$_ProjectGroupsOrderStructureCopyWithImpl(
-      _$_ProjectGroupsOrderStructure _value,
-      $Res Function(_$_ProjectGroupsOrderStructure) _then)
+class __$$_ProjectStructureCopyWithImpl<$Res>
+    extends _$ProjectStructureCopyWithImpl<$Res, _$_ProjectStructure>
+    implements _$$_ProjectStructureCopyWith<$Res> {
+  __$$_ProjectStructureCopyWithImpl(
+      _$_ProjectStructure _value, $Res Function(_$_ProjectStructure) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -959,7 +952,7 @@ class __$$_ProjectGroupsOrderStructureCopyWithImpl<$Res>
     Object? groupsOrder = null,
     Object? groupedTasksOrder = null,
   }) {
-    return _then(_$_ProjectGroupsOrderStructure(
+    return _then(_$_ProjectStructure(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -979,8 +972,8 @@ class __$$_ProjectGroupsOrderStructureCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class _$_ProjectGroupsOrderStructure extends _ProjectGroupsOrderStructure {
-  const _$_ProjectGroupsOrderStructure(
+class _$_ProjectStructure extends _ProjectStructure {
+  const _$_ProjectStructure(
       {required this.id,
       required final List<String> groupsOrder,
       required final List<TaskGroupOrder> groupedTasksOrder})
@@ -988,8 +981,8 @@ class _$_ProjectGroupsOrderStructure extends _ProjectGroupsOrderStructure {
         _groupedTasksOrder = groupedTasksOrder,
         super._();
 
-  factory _$_ProjectGroupsOrderStructure.fromJson(Map<String, dynamic> json) =>
-      _$$_ProjectGroupsOrderStructureFromJson(json);
+  factory _$_ProjectStructure.fromJson(Map<String, dynamic> json) =>
+      _$$_ProjectStructureFromJson(json);
 
   @override
   final String id;
@@ -1012,14 +1005,14 @@ class _$_ProjectGroupsOrderStructure extends _ProjectGroupsOrderStructure {
 
   @override
   String toString() {
-    return 'ProjectGroupsOrderStructure(id: $id, groupsOrder: $groupsOrder, groupedTasksOrder: $groupedTasksOrder)';
+    return 'ProjectStructure(id: $id, groupsOrder: $groupsOrder, groupedTasksOrder: $groupedTasksOrder)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ProjectGroupsOrderStructure &&
+            other is _$_ProjectStructure &&
             (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality()
                 .equals(other._groupsOrder, _groupsOrder) &&
@@ -1038,29 +1031,27 @@ class _$_ProjectGroupsOrderStructure extends _ProjectGroupsOrderStructure {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ProjectGroupsOrderStructureCopyWith<_$_ProjectGroupsOrderStructure>
-      get copyWith => __$$_ProjectGroupsOrderStructureCopyWithImpl<
-          _$_ProjectGroupsOrderStructure>(this, _$identity);
+  _$$_ProjectStructureCopyWith<_$_ProjectStructure> get copyWith =>
+      __$$_ProjectStructureCopyWithImpl<_$_ProjectStructure>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProjectGroupsOrderStructureToJson(
+    return _$$_ProjectStructureToJson(
       this,
     );
   }
 }
 
-abstract class _ProjectGroupsOrderStructure
-    extends ProjectGroupsOrderStructure {
-  const factory _ProjectGroupsOrderStructure(
+abstract class _ProjectStructure extends ProjectStructure {
+  const factory _ProjectStructure(
           {required final String id,
           required final List<String> groupsOrder,
           required final List<TaskGroupOrder> groupedTasksOrder}) =
-      _$_ProjectGroupsOrderStructure;
-  const _ProjectGroupsOrderStructure._() : super._();
+      _$_ProjectStructure;
+  const _ProjectStructure._() : super._();
 
-  factory _ProjectGroupsOrderStructure.fromJson(Map<String, dynamic> json) =
-      _$_ProjectGroupsOrderStructure.fromJson;
+  factory _ProjectStructure.fromJson(Map<String, dynamic> json) =
+      _$_ProjectStructure.fromJson;
 
   @override
   String get id;
@@ -1070,8 +1061,8 @@ abstract class _ProjectGroupsOrderStructure
   List<TaskGroupOrder> get groupedTasksOrder;
   @override
   @JsonKey(ignore: true)
-  _$$_ProjectGroupsOrderStructureCopyWith<_$_ProjectGroupsOrderStructure>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$_ProjectStructureCopyWith<_$_ProjectStructure> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 TaskGroupOrder _$TaskGroupOrderFromJson(Map<String, dynamic> json) {
