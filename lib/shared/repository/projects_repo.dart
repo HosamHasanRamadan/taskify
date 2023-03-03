@@ -16,35 +16,35 @@ class ProjectsRepo {
   static CollectionReference<Map<String, dynamic>> get groupCollection =>
       firestore.collection(FirebaseCollections.group);
 
-  static CollectionReference<Map<String, dynamic>> get projectGroupTasksOrderedCollection =>
-      firestore.collection(FirebaseCollections.projectGroupTasksOrdered);
+  static CollectionReference<Map<String, dynamic>> get projectStructureCollection =>
+      firestore.collection(FirebaseCollections.projectStructure);
 
   Future<void> addProject(Project project) async {
     final ref = await projectCollection.add(project.toFirebaseMap());
-    final emptyStructure = ProjectGroupsOrderStructure(
+    final emptyStructure = ProjectStructure(
       id: ref.id,
       groupsOrder: [],
       groupedTasksOrder: [],
     );
-    await projectGroupTasksOrderedCollection.doc(ref.id).set(emptyStructure.toFirebaseMap());
+    await projectStructureCollection.doc(ref.id).set(emptyStructure.toFirebaseMap());
   }
 
   Future<void> addGroup(Group group) async {
     final ref = await groupCollection.add(group.toFirebaseMap());
-    final structureSnapShot = await projectGroupTasksOrderedCollection.doc(group.projectId).get();
-    final structure = ProjectGroupsOrderStructure.fromFirebaseSnapshot(structureSnapShot);
+    final structureSnapshot = await projectStructureCollection.doc(group.projectId).get();
+    final structure = ProjectStructure.fromFirebaseSnapshot(structureSnapshot);
     final newGroupsOrder = [...structure.groupsOrder, ref.id];
     final newTasksGroupOrder = [...structure.groupedTasksOrder, TaskGroupOrder(id: ref.id, tasksIds: [])];
     final newStructure = structure.copyWith(
       groupsOrder: newGroupsOrder,
       groupedTasksOrder: newTasksGroupOrder,
     );
-    await projectGroupTasksOrderedCollection.doc(group.projectId).update(newStructure.toFirebaseMap());
+    await projectStructureCollection.doc(group.projectId).update(newStructure.toFirebaseMap());
   }
 
   Future<void> deleteProject(String projectId) async {
     final projectRef = projectCollection.doc(projectId);
-    final structureRef = projectGroupTasksOrderedCollection.doc(projectId);
+    final structureRef = projectStructureCollection.doc(projectId);
     final groups = await groupCollection.where('project_id', isEqualTo: projectId).get();
     final tasks = await taskCollection.where('project_id', isEqualTo: projectId).get();
     final batch = firestore.batch();

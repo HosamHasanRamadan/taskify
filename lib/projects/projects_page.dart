@@ -25,49 +25,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
         final asyncProjects = ref.watch(projectsProvider);
 
         final child = asyncProjects.map(
-          error: (error) {
-            return const Text('Error');
-          },
-          loading: (loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-          data: (data) {
-            final projects = data.requireValue;
-            return ListView.builder(
-              itemCount: projects.length,
-              itemBuilder: (context, index) {
-                final project = projects.elementAt(index);
-                return InkWell(
-                  onTap: () {
-                    context.go('/project/${project.id}');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: [
-                        SizedBox.square(
-                          dimension: 10,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: HexColor(project.color),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Text(
-                          project.title,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
+          error: error,
+          loading: loading,
+          data: data,
         );
 
         return Scaffold(
@@ -169,6 +129,54 @@ class _ProjectsPageState extends State<ProjectsPage> {
           ),
         );
       },
+    );
+  }
+
+  Widget data(AsyncValue<Iterable<Project>> data) {
+    final projects = data.requireValue;
+    return ListView.builder(
+      itemCount: projects.length,
+      itemBuilder: (context, index) {
+        final project = projects.elementAt(index);
+        return InkWell(
+          onTap: () {
+            context.go('/project/${project.id}');
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                SizedBox.square(
+                  dimension: 10,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: HexColor(project.color),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  project.title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget error(AsyncError _) {
+    return const Center(
+      child: Text('Error'),
+    );
+  }
+
+  Widget loading(AsyncLoading _) {
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

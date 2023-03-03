@@ -7,5 +7,5 @@ class FirebaseCollections {
   static const project = 'project';
   static const group = 'group';
   static const task = 'task';
-  static const projectGroupTasksOrdered = 'project_group_tasks_ordered';
+  static const projectStructure = 'project_structure';
 }

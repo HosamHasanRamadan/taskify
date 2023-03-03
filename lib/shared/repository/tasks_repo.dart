@@ -18,8 +18,8 @@ class TasksRepo {
   static CollectionReference<Map<String, dynamic>> get groupCollection =>
       firestore.collection(FirebaseCollections.group);
 
-  static CollectionReference<Map<String, dynamic>> get projectGroupTasksOrderedCollection =>
-      firestore.collection(FirebaseCollections.projectGroupTasksOrdered);
+  static CollectionReference<Map<String, dynamic>> get projectStructureCollection =>
+      firestore.collection(FirebaseCollections.projectStructure);
 
   Future<void> startTimer(Task task) async {
     if (task.isRunning) return;
@@ -50,14 +50,14 @@ class TasksRepo {
     required List<String> newGroupOrder,
   }) async {
     final taskRef = taskCollection.doc(task.id);
-    final projecttaskOrderRef = projectGroupTasksOrderedCollection.doc(task.projectId);
+    final structureRef = projectStructureCollection.doc(task.projectId);
 
     await firestore.runTransaction((transaction) async {
-      final orderMap = await transaction.get(projecttaskOrderRef);
+      final orderMap = await transaction.get(structureRef);
       transaction.update(taskRef, task.copyWith(groupId: newGroup.id).toFirebaseMap());
-      final order = ProjectGroupsOrderStructure.fromFirebaseSnapshot(orderMap);
+      final structure = ProjectStructure.fromFirebaseSnapshot(orderMap);
 
-      final newGroupOrders = order.groupedTasksOrder.map((e) {
+      final newGroupOrders = structure.groupedTasksOrder.map((e) {
         if (e.id == oldGroup.id) {
           return e.copyWith(tasksIds: oldGroupOrder);
         }
@@ -67,8 +67,8 @@ class TasksRepo {
         }
         return e;
       }).toList();
-      final newprojectStructure = order.copyWith(groupedTasksOrder: newGroupOrders);
-      transaction.update(projecttaskOrderRef, newprojectStructure.toFirebaseMap());
+      final newProjectStructure = structure.copyWith(groupedTasksOrder: newGroupOrders);
+      transaction.update(structureRef, newProjectStructure.toFirebaseMap());
     });
   }
 
@@ -78,16 +78,16 @@ class TasksRepo {
 
   void changeTasksOrder(Group group, List<String> newIdsOrder) async {
     final projectId = group.projectId;
-    final resultSnapshot = await projectGroupTasksOrderedCollection.doc(projectId).get();
+    final structureSnapshot = await projectStructureCollection.doc(projectId).get();
 
-    final a = ProjectGroupsOrderStructure.fromFirebaseSnapshot(resultSnapshot);
-    final oldGroupIds = a.groupedTasksOrder.firstWhere((element) => element.id == group.id);
+    final structure = ProjectStructure.fromFirebaseSnapshot(structureSnapshot);
+    final oldGroupIds = structure.groupedTasksOrder.firstWhere((element) => element.id == group.id);
     final newGroupIds = oldGroupIds.copyWith(tasksIds: newIdsOrder);
 
-    final newGroupTasksOrder = a.groupedTasksOrder.map((k) => k.id == group.id ? newGroupIds : k);
+    final newGroupTasksOrder = structure.groupedTasksOrder.map((item) => item.id == group.id ? newGroupIds : item);
 
-    final newProjectStructure = a.copyWith(groupedTasksOrder: newGroupTasksOrder.toList());
-    projectGroupTasksOrderedCollection.doc(newProjectStructure.id).update(newProjectStructure.toFirebaseMap());
+    final newProjectStructure = structure.copyWith(groupedTasksOrder: newGroupTasksOrder.toList());
+    projectStructureCollection.doc(newProjectStructure.id).update(newProjectStructure.toFirebaseMap());
   }
 
   Future<Task> addTask(Task task) async {
@@ -95,10 +95,10 @@ class TasksRepo {
     final groupId = task.groupId;
 
     final docId = projectId;
-    final resultSnapshot = await projectGroupTasksOrderedCollection.doc(docId).get();
+    final structureSnapshot = await projectStructureCollection.doc(docId).get();
 
-    final a = ProjectGroupsOrderStructure.fromFirebaseSnapshot(resultSnapshot);
-    final groupTasksOrder = a.groupedTasksOrder.firstWhere((k) => k.id == groupId);
+    final structure = ProjectStructure.fromFirebaseSnapshot(structureSnapshot);
+    final groupTasksOrder = structure.groupedTasksOrder.firstWhere((item) => item.id == groupId);
 
     final taskDocRef = await taskCollection.add(task.toFirebaseMap());
     final taskId = taskDocRef.id;
@@ -108,20 +108,20 @@ class TasksRepo {
       taskId,
     ]);
 
-    final newGroupTasksOrder = a.groupedTasksOrder.map((k) => k.id == groupId ? newGroupOrder : k);
+    final newGroupTasksOrder = structure.groupedTasksOrder.map((k) => k.id == groupId ? newGroupOrder : k);
 
-    final newProjectStructure = a.copyWith(groupedTasksOrder: newGroupTasksOrder.toList());
-    projectGroupTasksOrderedCollection.doc(newProjectStructure.id).update(newProjectStructure.toFirebaseMap());
+    final newProjectStructure = structure.copyWith(groupedTasksOrder: newGroupTasksOrder.toList());
+    projectStructureCollection.doc(newProjectStructure.id).update(newProjectStructure.toFirebaseMap());
 
     return task.copyWith(id: taskId);
   }
 
   Future<void> updateGroupsOrder(String projectID, List<String> newOrder) async {
-    final resultSnapshot = await projectGroupTasksOrderedCollection.doc(projectID).get();
-    final a = ProjectGroupsOrderStructure.fromFirebaseSnapshot(resultSnapshot);
+    final structureSnapshot = await projectStructureCollection.doc(projectID).get();
+    final structure = ProjectStructure.fromFirebaseSnapshot(structureSnapshot);
 
-    final newProjectStructure = a.copyWith(groupsOrder: newOrder);
-    await projectGroupTasksOrderedCollection.doc(projectID).update(newProjectStructure.toFirebaseMap());
+    final newProjectStructure = structure.copyWith(groupsOrder: newOrder);
+    await projectStructureCollection.doc(projectID).update(newProjectStructure.toFirebaseMap());
   }
 
   Future<void> updateTask(Task task) async {
