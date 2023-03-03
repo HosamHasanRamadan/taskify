@@ -1,3 +1,3 @@
-#### Initial version
+#### v1.0.2+1
 
-- First app release
+- Update read me
