@@ -133,9 +133,9 @@ class TasksRepo {
     required bool value,
   }) async {
     Task newTask = task;
-    if (task.isRunning == true) {
-      final durationDiff = DateTime.now().unixTimestamp - task.lastStartTimestamp;
-      final newDuration = durationDiff + task.durationSpentInSec;
+    if (newTask.isRunning == true) {
+      final durationDiff = DateTime.now().unixTimestamp - newTask.lastStartTimestamp;
+      final newDuration = durationDiff + newTask.durationSpentInSec;
       newTask = newTask.copyWith(
         durationSpentInSec: newDuration,
         isRunning: false,
@@ -143,12 +143,12 @@ class TasksRepo {
     }
 
     if (value) {
-      newTask = task.copyWith(
+      newTask = newTask.copyWith(
         isCompleted: true,
         compilationTimestamp: DateTime.now().unixTimestamp,
       );
     } else {
-      newTask = task.copyWith(
+      newTask = newTask.copyWith(
         isCompleted: false,
         compilationTimestamp: null,
       );
