@@ -1,3 +1,3 @@
-#### v1.0.2+1
+#### v1.0.3+1
 
-- Update read me
+- Fix duration issue of completing running task.
